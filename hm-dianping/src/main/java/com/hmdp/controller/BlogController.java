@@ -26,7 +26,7 @@ public class BlogController {
      * @param blog
      * @return
      */
-    @PostMapping
+    @PostMapping("create")
     public Result saveBlog(@RequestBody Blog blog) {
         return blogService.saveBlog(blog);
     }
