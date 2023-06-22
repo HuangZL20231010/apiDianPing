@@ -1,8 +1,11 @@
 package com.hmdp.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.hmdp.dto.Result;
+import com.hmdp.entity.SeckillVoucher;
 import com.hmdp.entity.Voucher;
+import com.hmdp.service.ISeckillVoucherService;
 import com.hmdp.service.IVoucherService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +18,9 @@ public class VoucherController {
 
     @Resource
     private IVoucherService voucherService;
+
+    @Resource
+    private ISeckillVoucherService seckillVoucherService;
 
     /**
      * 新增普通券
@@ -47,5 +53,14 @@ public class VoucherController {
     @GetMapping("/list/{shopId}")
     public Result queryVoucherOfShop(@PathVariable("shopId") Long shopId) {
        return voucherService.queryVoucherOfShop(shopId);
+    }
+
+    @PutMapping("/updateStock")
+    public Result updateSocket(@RequestParam("voucherId") Long voucherId,
+                               @RequestParam("stock") Integer stock) {
+        SeckillVoucher seckillVoucher = new SeckillVoucher();
+        seckillVoucher.setStock(stock);
+        seckillVoucherService.update(seckillVoucher,new UpdateWrapper<SeckillVoucher>().eq("voucher_id",voucherId));
+        return Result.ok();
     }
 }

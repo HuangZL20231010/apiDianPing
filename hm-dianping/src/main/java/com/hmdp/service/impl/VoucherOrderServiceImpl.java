@@ -132,6 +132,8 @@ public class VoucherOrderServiceImpl extends ServiceImpl<VoucherOrderMapper, Vou
         voucherOrder.setId(orderId);
         //2.6用户id
         voucherOrder.setUserId(userId);
+        //放入阻塞对列中
+        orderTasks.add(voucherOrder);
 
         //3.获取代理对象
         proxy = (IVoucherOrderService) AopContext.currentProxy();
