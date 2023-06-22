@@ -94,10 +94,10 @@ public class BlogController {
      * @param id
      * @return
      */
-    @GetMapping("/of/user")
+    @GetMapping("/of/{id}")
     public Result queryBlogByUserId(
             @RequestParam(value = "current", defaultValue = "1") Integer current,
-            @RequestParam("id") Long id) {
+            @PathVariable("id") Long id) {
         // 根据用户查询
         Page<Blog> page = blogService.query()
                 .eq("user_id", id).page(new Page<>(current, SystemConstants.MAX_PAGE_SIZE));

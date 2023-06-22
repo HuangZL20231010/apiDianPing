@@ -18,7 +18,7 @@ public class FollowController {
     /**
      * 关注与取消关注
      * @param followUserId
-     * @param isFollow ture为关注 flase为取消
+     * @param isFollow true为关注 false为取消
      * @return
      */
     @PutMapping("/{id}/{isFollow}")
@@ -31,7 +31,7 @@ public class FollowController {
      * @param followUserId
      * @return
      */
-    @GetMapping("/or/not/{id}")
+    @GetMapping("/checkIfFollowed/{id}")
     public Result isFollow(@PathVariable("id") Long followUserId) {
         return followService.isFollow(followUserId);
     }
