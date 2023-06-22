@@ -29,14 +29,7 @@ import static com.api.utils.RedisConstants.*;
 import static com.api.utils.RedisConstants.USER_SIGN_KEY;
 import static com.api.utils.SystemConstants.USER_NICK_NAME_PREFIX;
 
-/**
- * <p>
- * 服务实现类
- * </p>
- *
- * @author 虎哥
- * @since 2021-12-22
- */
+
 @Slf4j
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IUserService {
