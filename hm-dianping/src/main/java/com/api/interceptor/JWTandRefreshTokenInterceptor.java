@@ -45,7 +45,7 @@ public class JWTandRefreshTokenInterceptor implements HandlerInterceptor {
         Map<String,Object> map = new HashMap<>();
         // 获取请求头中令牌
         String token = request.getHeader("Authorization");
-//        token = token.substring(7);
+        if(StrUtil.isNotBlank(token))token = token.substring(7);
         System.out.println("token: " + token);
         try {
             // 验证令牌
@@ -82,6 +82,7 @@ public class JWTandRefreshTokenInterceptor implements HandlerInterceptor {
             map.put("msg","算法不一致");
         }catch (Exception e){
             e.printStackTrace();
+            response.setStatus(401);
             map.put("msg","token无效！");
         }
         map.put("state",false);  // 设置状态
