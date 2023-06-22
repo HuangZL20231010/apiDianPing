@@ -36,7 +36,7 @@ public class ShopController {
      * @param shop 商铺数据
      * @return 商铺id
      */
-    @PostMapping
+    @PostMapping("add")
     public Result saveShop(@RequestBody Shop shop) {
         // 写入数据库
         shopService.save(shop);
@@ -49,7 +49,7 @@ public class ShopController {
      * @param shop 商铺数据
      * @return 无
      */
-    @PutMapping
+    @PutMapping("update")
     public Result updateShop(@RequestBody Shop shop) {
         // 写入数据库
 
