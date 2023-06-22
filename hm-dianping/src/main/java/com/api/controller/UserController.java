@@ -104,11 +104,11 @@ public class UserController {
      * @return
      */
     @GetMapping("/{id}")
-    public Result queryUserById(@PathVariable("id") Long userId){
+    public Result queryUserById (@PathVariable("id") Long userId){
         // 查询详情
         User user = userService.getById(userId);
         if (user == null) {
-            return Result.ok();
+            throw new NoContentException("查无此人");
         }
         UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
         // 返回
