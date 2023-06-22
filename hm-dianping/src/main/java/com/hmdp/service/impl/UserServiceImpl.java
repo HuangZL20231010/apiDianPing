@@ -11,6 +11,7 @@ import com.hmdp.dto.UserDTO;
 import com.hmdp.entity.User;
 import com.hmdp.mapper.UserMapper;
 import com.hmdp.service.IUserService;
+import com.hmdp.utils.JWTUtils;
 import com.hmdp.utils.RegexUtils;
 import com.hmdp.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
@@ -99,21 +100,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
         //7.保存用户信息到redis
         //7.1 随机生成token，作为登录令牌
-        String token = UUID.randomUUID().toString(true);
+//        String token = UUID.randomUUID().toString(true);
+        Map<String,String> payload=new HashMap<>();
+        payload.put("id",String.valueOf(user.getId()));
+        payload.put("phone",user.getPhone());
+        payload.put("type", String.valueOf(user.getType()));
+        String token = JWTUtils.getToken(payload);
 
         //7.2 将User对象转为HashMap存储
-        UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
-        Map<String, Object> userMap = BeanUtil.beanToMap(userDTO, new HashMap<>(),
-                CopyOptions.create()
-                        .setIgnoreNullValue(true)
-                        .setFieldValueEditor((filedName, fieldValue) -> fieldValue.toString()));
+//        UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
+//        Map<String, Object> userMap = BeanUtil.beanToMap(userDTO, new HashMap<>(),
+//                CopyOptions.create()
+//                        .setIgnoreNullValue(true)
+//                        .setFieldValueEditor((filedName, fieldValue) -> fieldValue.toString()));
 
 
         //7.3 存储
-        stringRedisTemplate.opsForHash().putAll(LOGIN_USER_KEY+token,userMap);
+//        stringRedisTemplate.opsForHash().putAll(LOGIN_USER_KEY+token,userMap);
 
         //7.4 设置token的有效期
-        stringRedisTemplate.expire(LOGIN_USER_KEY+token,LOGIN_USER_TTL,TimeUnit.MINUTES);
+//        stringRedisTemplate.expire(LOGIN_USER_KEY+token,LOGIN_USER_TTL,TimeUnit.MINUTES);
 
         //8.返回token
         return Result.ok(token);
