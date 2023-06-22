@@ -62,5 +62,10 @@ public class User implements Serializable {
      */
     private LocalDateTime updateTime;
 
+    /**
+     * 用户类型 0普通 1商家
+     */
+    private Integer type;
+
 
 }
