@@ -2,11 +2,14 @@ package com.api.controller;
 
 
 import cn.hutool.core.util.StrUtil;
+import com.api.exception.BadRequestException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.api.dto.Result;
 import com.api.entity.Shop;
 import com.api.service.IShopService;
 import com.api.utils.SystemConstants;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -25,10 +28,13 @@ public class ShopController {
      * @return 商铺详情数据
      */
     @GetMapping("/{id}")
-    public Result queryShopById(@PathVariable("id") Long id) {
-        Result result =shopService.queryById(id);
+    public ResponseEntity<Result> queryShopById(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(shopService.queryById(id), HttpStatus.OK);
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(shopService.queryById(id), HttpStatus.NO_CONTENT);
+        }
 
-        return result;
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.api.service.impl;
 
 import cn.hutool.json.JSONUtil;
+import com.api.exception.NoContentException;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.api.dto.Result;
 import com.api.entity.ShopType;
@@ -52,7 +53,8 @@ System.out.println("shopTypeList (from redis)："+shopTypeList+"\n\n");
 System.out.println("shopTypeList："+shopTypeList+"\n\n");
         //4.查询为空 报错
         if(shopTypeList.isEmpty()){
-            return Result.fail("查询列表失败");
+//            return Result.fail("查询列表失败");
+            throw new NoContentException("查询列表失败");
         }
 
 

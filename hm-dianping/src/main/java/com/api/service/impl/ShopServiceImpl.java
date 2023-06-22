@@ -4,6 +4,7 @@ import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.api.exception.NoContentException;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.api.dto.Result;
 import com.api.entity.Shop;
@@ -43,7 +44,9 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 //        Shop shop = queryWithLogicTimeOut(id);
 
         //返回
-        if(shop==null)return Result.fail("店铺不存在");
+        if(shop==null)
+            //return Result.fail("店铺不存在");
+            throw new NoContentException("店铺不存在");
         return Result.ok(shop);
     }
 

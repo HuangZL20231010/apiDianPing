@@ -7,10 +7,15 @@ import com.api.dto.Result;
 import com.api.dto.UserDTO;
 import com.api.entity.User;
 import com.api.entity.UserInfo;
+import com.api.exception.BadRequestException;
+import com.api.exception.NoContentException;
+import com.api.exception.UnauthorizedException;
 import com.api.service.IUserInfoService;
 import com.api.service.IUserService;
 import com.api.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -22,6 +27,21 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/user")
 public class UserController {
 
+//    @ExceptionHandler(BadRequestException.class)
+//    public ResponseEntity<Result> handleBadRequestException(BadRequestException ex) {
+//        return new ResponseEntity<>(Result.fail(ex.getMessage()), HttpStatus.BAD_REQUEST);
+//    }
+//
+//    @ExceptionHandler(NoContentException.class)
+//    public ResponseEntity<Result> handleNoContentException(NoContentException ex) {
+//        return new ResponseEntity<>(Result.fail(ex.getMessage()), HttpStatus.NO_CONTENT);
+//    }
+//
+//    @ExceptionHandler(UnauthorizedException.class)
+//    public ResponseEntity<Result> handleUnauthorizedException(UnauthorizedException ex) {
+//        return new ResponseEntity<>(Result.fail(ex.getMessage()), HttpStatus.UNAUTHORIZED);
+//    }
+
     @Resource
     private IUserService userService;
 
@@ -32,20 +52,20 @@ public class UserController {
      * 发送手机验证码
      */
     @PostMapping("code")
-    public Result sendCode(@RequestParam("phone") String phone, HttpSession session) {
-        return userService.sedCode(phone,session);
+    public ResponseEntity<Result> sendCode(@RequestParam("phone") String phone, HttpSession session) {
+        return new ResponseEntity<>(userService.sedCode(phone, session), HttpStatus.OK);
+
     }
 
     /**
      * 登录功能
      * @param loginForm 登录参数，包含手机号、验证码；或者手机号、密码
      */
-    @PostMapping("/login")
-    public Result login(@RequestBody LoginFormDTO loginForm, HttpSession session){
+    @PostMapping("login")
+    public ResponseEntity<Result> login(@RequestBody LoginFormDTO loginForm, HttpSession session){
         // 实现登录功能
-        Result result = userService.login(loginForm, session);
-        System.out.println(result);
-        return result;
+        return new ResponseEntity<>(userService.login(loginForm, session), HttpStatus.OK);
+
     }
 
     /**
