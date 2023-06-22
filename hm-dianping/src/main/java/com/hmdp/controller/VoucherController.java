@@ -28,7 +28,7 @@ public class VoucherController {
     }
 
     /**
-     * 新增秒杀券
+     * 新增秒杀券(秒杀券也是普通券的一种类型)
      * @param voucher 优惠券信息，包含秒杀信息
      * @return 优惠券id
      */
