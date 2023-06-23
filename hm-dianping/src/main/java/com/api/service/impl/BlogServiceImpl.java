@@ -113,6 +113,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
             if (isSuccess) {
                 stringRedisTemplate.opsForZSet().remove(key, userId.toString());
             }
+            return Result.ok("已取消点赞");
         }
         return Result.ok();
     }
