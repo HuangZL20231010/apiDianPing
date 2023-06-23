@@ -102,6 +102,8 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
             // 3.2.保存用户到Redis的set集合  zadd key value score
             if (isSuccess) {
                 stringRedisTemplate.opsForZSet().add(key, userId.toString(), System.currentTimeMillis());
+            }else{
+                throw new UnavailableException("点赞失败");
             }
         } else {
             // 4.如果已点赞，取消点赞
