@@ -3,6 +3,7 @@ package com.api.interceptor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.api.utils.UserHolder;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class MerchantInterceptor implements HandlerInterceptor {
             String json = new ObjectMapper().writeValueAsString(map);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().println(json);
-            response.setStatus(403);
+            response.setStatus(HttpStatus.FORBIDDEN.value());
             return false;
         }
 

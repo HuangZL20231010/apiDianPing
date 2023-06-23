@@ -45,6 +45,7 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
                 // 把关注用户的id，放入redis的set集合 sadd userId followerUserId
                 stringRedisTemplate.opsForSet().add(key, followUserId.toString());
             }
+            return Result.ok("关注成功");
         } else {
             // 3.取关，删除 delete from tb_follow where user_id = ? and follow_user_id = ?
             boolean isSuccess = remove(new QueryWrapper<Follow>()
@@ -53,8 +54,9 @@ public class FollowServiceImpl extends ServiceImpl<FollowMapper, Follow> impleme
                 // 把关注用户的id从Redis集合中移除
                 stringRedisTemplate.opsForSet().remove(key, followUserId.toString());
             }
+            return Result.ok("取关成功");
         }
-        return Result.ok();
+
     }
 
     @Override
