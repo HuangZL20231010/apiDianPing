@@ -10,6 +10,7 @@ import com.api.entity.UserInfo;
 import com.api.exception.BadRequestException;
 import com.api.exception.NoContentException;
 import com.api.exception.UnauthorizedException;
+import com.api.exception.UnprocessableEntityException;
 import com.api.service.IUserInfoService;
 import com.api.service.IUserService;
 import com.api.utils.UserHolder;
@@ -108,7 +109,7 @@ public class UserController {
         // 查询详情
         User user = userService.getById(userId);
         if (user == null) {
-            throw new NoContentException("查无此人");
+            throw new UnprocessableEntityException("查无此人");
         }
         UserDTO userDTO = BeanUtil.copyProperties(user, UserDTO.class);
         // 返回
