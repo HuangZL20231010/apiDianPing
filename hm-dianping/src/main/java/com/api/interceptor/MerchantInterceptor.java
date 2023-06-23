@@ -30,7 +30,7 @@ public class MerchantInterceptor implements HandlerInterceptor {
             String json = new ObjectMapper().writeValueAsString(map);
             response.setContentType("application/json;charset=UTF-8");
             response.getWriter().println(json);
-            response.setStatus(401);
+            response.setStatus(403);
             return false;
         }
 

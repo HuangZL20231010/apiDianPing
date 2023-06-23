@@ -2,7 +2,7 @@ package com.api.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.StrUtil;
-import com.api.exception.UnavailableException;
+import com.api.exception.UnprocessableEntityException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.api.dto.Result;
@@ -103,7 +103,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
             if (isSuccess) {
                 stringRedisTemplate.opsForZSet().add(key, userId.toString(), System.currentTimeMillis());
             }else{
-                throw new UnavailableException("点赞失败");
+                throw new UnprocessableEntityException("点赞失败");
             }
         } else {
             // 4.如果已点赞，取消点赞
@@ -147,7 +147,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements IB
         boolean isSuccess = save(blog);
         if(!isSuccess){
 //            return Result.fail("新增笔记失败!");
-            throw new UnavailableException("新增笔记失败！");
+            throw new UnprocessableEntityException("新增笔记失败！");
         }
         // 3.查询笔记作者的所有粉丝 select * from tb_follow where follow_user_id = ?
         List<Follow> follows = followService.query().eq("follow_user_id", user.getId()).list();

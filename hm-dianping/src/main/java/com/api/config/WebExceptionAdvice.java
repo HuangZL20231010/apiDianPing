@@ -4,7 +4,7 @@ import com.api.dto.Result;
 import com.api.exception.BadRequestException;
 import com.api.exception.NoContentException;
 import com.api.exception.UnauthorizedException;
-import com.api.exception.UnavailableException;
+import com.api.exception.UnprocessableEntityException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,12 +32,12 @@ public class WebExceptionAdvice {
 
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<Result> handleRuntimeException(RuntimeException e) {
-        return new ResponseEntity<>(Result.fail("服务器异常，请重试"), HttpStatus.SERVICE_UNAVAILABLE);
+        return new ResponseEntity<>(Result.fail("服务器异常，请重试"), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(UnavailableException.class)
-    public ResponseEntity<Result> handleUnavailableException(UnauthorizedException ex) {
-        return new ResponseEntity<>(Result.fail(ex.getMessage()), HttpStatus.SERVICE_UNAVAILABLE);
+    @ExceptionHandler(UnprocessableEntityException.class)
+    public ResponseEntity<Result> handleUnprocessableEntityException(UnprocessableEntityException ex) {
+        return new ResponseEntity<>(Result.fail(ex.getMessage()), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
 
